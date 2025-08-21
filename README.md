@@ -1,2 +1,3 @@
-# cubespace-postprocessing
-Python Script to process CubeSpace EOS simulation results
+# SSRL GNC Postprocessing
+
+Python tool for postprocessing ADCS testing results

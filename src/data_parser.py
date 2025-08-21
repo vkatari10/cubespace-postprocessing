@@ -4,7 +4,10 @@ Source containing logic to parse data input from the CLI
 Author: Vikas Katari
 Date: 08/18/2025
 """
+import os
 import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime
 
 """
 DFs will be of size [n: 10] where we introduce a new
@@ -32,3 +35,38 @@ def excel_to_df(file: str) -> pd.DataFrame:
     """Excel -> Pandas DF"""
     df = pd.read_excel(file) 
     return df
+
+
+def compare_cols(df: pd.DataFrame) -> pd.DataFrame:
+    """Compares columns 1->4; 2->5, 3->6 comparing MOCI results to EOS estimates"""
+    new_cols = ['Roll_Difference', 'Pitch_Difference', 'Yaw_Difference']
+    for i in range(1, 4):
+        diff = df.iloc[:, i] - df.iloc[:, i + 3]
+
+        df[new_cols[i - 1]] = diff
+
+    return df
+
+
+def create_plot(df: pd.DataFrame) -> None:
+    """Generates a plot of the results"""
+
+    curr_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    os.makedirs(f"../results/{curr_time}", exist_ok=True)
+
+    plt.xlabel("Time Since Start")
+    X = df.index
+
+    Y_labels = ['Roll', 'Pitch', 'Yaw']
+
+    for col in range(10, 13): # first col added at index 10
+        plt.title(f"Difference between MOCI and EOS ADCS {Y_labels[col - 10]}  values")
+        plt.ylabel(f"{Y_labels[col - 10]} Difference (Euler Angle)")
+        Y = df.iloc[:, col]
+        plt.plot(X, Y)
+
+
+        plt.savefig(f"../results/{curr_time}/{Y_labels[col - 10]}_graph.png")
+
+        plt.close()

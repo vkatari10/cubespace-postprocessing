@@ -8,7 +8,12 @@ Date: 08/18/2025
 import sys
 import src.data_parser as dp
 
-if __name__ == "__main__":
 
+def main() -> None:
     args = sys.argv
     df = dp.excel_to_df(args[1])
+    df = dp.compare_cols(df)
+    dp.create_plot(df)
+
+if __name__ == "__main__":
+    main()
