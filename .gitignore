@@ -209,3 +209,6 @@ __marimo__/
 # excel files
 *.xlsx
 *.Identifier
+
+# plot images
+*.png
