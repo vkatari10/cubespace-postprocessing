@@ -49,24 +49,32 @@ def compare_cols(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def create_plot(df: pd.DataFrame) -> None:
-    """Generates a plot of the results"""
+    """
+    Generates a plot of the results
+
+    Note: the folder paths assume they are being called from the root
+    of the repo, not from where this file is located 
+
+    i.e. results/ is the valid path, NOT ../results
+    """
 
     curr_time = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    os.makedirs(f"../results/{curr_time}", exist_ok=True)
-
-    plt.xlabel("Time Since Start")
+    os.makedirs(f"results/{curr_time}", exist_ok=True)
+    
     X = df.index
 
     Y_labels = ['Roll', 'Pitch', 'Yaw']
 
     for col in range(10, 13): # first col added at index 10
-        plt.title(f"Difference between MOCI and EOS ADCS {Y_labels[col - 10]}  values")
+        plt.figure()
+        plt.xlabel("Time Since Start")
+        plt.title(f"Difference between MOCI and EOS ADCS {Y_labels[col - 10]} Values")
         plt.ylabel(f"{Y_labels[col - 10]} Difference (Euler Angle)")
         Y = df.iloc[:, col]
         plt.plot(X, Y)
 
 
-        plt.savefig(f"../results/{curr_time}/{Y_labels[col - 10]}_graph.png")
+        plt.savefig(f"results/{curr_time}/{curr_time}_{Y_labels[col - 10]}_graph.png")
 
         plt.close()
