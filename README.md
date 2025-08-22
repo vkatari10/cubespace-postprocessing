@@ -1,13 +1,23 @@
-# CubeSpace EOS ADCS Postprocessing Visualizer
+# CubeSpace EOS ADCS Test Postprocessing
 
-Python Tool to easily get visual results from CubeSpace EOS ADCS testing results. 
+Python Tool to easily postprocess data from CubeSpace EOS ADCS testing results. 
 
 ## Usage 
 
 Bring the Microsoft Excel spreadsheet into the root of the repo, and simply call 
 
-```Python
+```
 python3 process.py <YOUR_EXCEL_SHEET_NAME>
 ```
 
-Then you can find your resulting graphs inside the `results/` folder which includes deviations from the Satellite ADCS system and the values from CubeSpace EOS for Roll, Pitch, and Yaw values. They will be contained in a folder with the timestamp of when you started the execution. 
+Resulting plots will be stored in the `results/` folder with a timestamp of when the test was ran. Contained inside each of these folders are the visual graphs for the Roll, Pitch, and Yaw values from the satelite against the physics engine values.  
+
+# Setup
+
+1. Ensure you have the latest Python installation locally on your computer
+2. Clone this repo 
+3. Create the virtual environment `python3 -m venv .venv`
+4. Download required dependencies `pip install -r requirements.txt`
+
+# Author
+Vikas Katari
