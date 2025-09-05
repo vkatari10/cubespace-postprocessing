@@ -55,7 +55,8 @@ def create_plot(df: pd.DataFrame) -> None:
     Note: the folder paths assume they are being called from the root
     of the repo, not from where this file is located 
 
-    i.e. results/ is the valid path, NOT ../results
+    i.e. results/ is the valid path, NOT ../results since we are calling 
+    it from process.py
     """
 
     curr_time = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -66,15 +67,15 @@ def create_plot(df: pd.DataFrame) -> None:
 
     Y_labels = ['Roll', 'Pitch', 'Yaw']
 
-    for col in range(10, 13): # first col added at index 10
+    for col in range(3): # first col added at index 10
         plt.figure()
         plt.xlabel("Time Since Start")
-        plt.title(f"Difference between MOCI and EOS ADCS {Y_labels[col - 10]} Values")
-        plt.ylabel(f"{Y_labels[col - 10]} Difference (Euler Angle)")
-        Y = df.iloc[:, col]
+        plt.title(f"Difference between MOCI and EOS ADCS {Y_labels[col]} Values")
+        plt.ylabel(f"{Y_labels[col]} Difference (Euler Angle)")
+        Y = df.iloc[:, col + 10]
         plt.plot(X, Y)
 
 
-        plt.savefig(f"results/{curr_time}/{curr_time}_{Y_labels[col - 10]}_graph.png")
+        plt.savefig(f"results/{curr_time}/{curr_time}_{Y_labels[col]}_graph.png")
 
         plt.close()
